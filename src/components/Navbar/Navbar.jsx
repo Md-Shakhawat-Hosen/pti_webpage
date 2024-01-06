@@ -7,7 +7,7 @@ import Dropdown from "../Dropdown/Dropdown";
 const Navbar = () => {
     
   return (
-    <div className="flex items-center justify-around mt-8">
+    <div className="flex items-center justify-between mt-8">
       <div>
         <h1 className="font-bold text-xl">pti.</h1>
       </div>

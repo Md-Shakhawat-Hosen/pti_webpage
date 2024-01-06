@@ -1,9 +1,14 @@
+import Banner from "../components/Banner/Banner";
+import Popular from "../components/Popular/Popular";
+import Recommended from "../components/Recommended/Recommended";
 
 
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <Banner></Banner>
+            <Popular></Popular>
+            <Recommended></Recommended>
         </div>
     );
 };
