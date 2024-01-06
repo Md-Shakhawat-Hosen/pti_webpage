@@ -55,7 +55,7 @@ const Recommended = () => {
         setStartIndex((prevIndex) => Math.min(prevIndex + 1, items.length - 5));
       };
   return (
-    <div className="mt-10">
+    <div className="mt-10 mb-24">
       <div className="flex justify-between mb-4">
         <h1 className="font-bold">Recommended</h1>
         <div className="flex gap-1">
