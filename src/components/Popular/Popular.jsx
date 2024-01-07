@@ -1,24 +1,79 @@
 
-
-import { useEffect, useState } from "react";
 import Slider from "react-slick";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
+import { useForm } from "react-hook-form";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import { useContext, useState } from "react";
+import { AuthProviderContext } from "../../Porvider/AuthContext";
 
 const Popular = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [slider, setSlider] = useState(null);
-  const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    fetch(
-      "http://www.api.technicaltest.quadtheoryltd.com/api/Item?page=1&pageSize=10"
-    )
-      .then((res) => res.json())
-      .then((data) => setItems(data.Items));
-  }, []);
+  const {items,setItems} = useContext(AuthProviderContext);
+
+
+    const {
+      register,
+      formState: { errors },
+      handleSubmit,
+    } = useForm();
+
+    const randomId = uuidv4();
+
+    const api_key = import.meta.env.VITE_image_api;
+    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${api_key}`;
+
+
+
+
+      const onSubmit = async (data) => {
+        // console.log(data);
+
+        // console.log(selectedOption)
+        // console.log(selectedOptionPublisher)
+
+        const imageFile = { image: data.image[0] };
+        const res = await axios.post(image_hosting_api, imageFile, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      
+
+        if (res.data.success) {
+                 const formData = {
+                    Id: randomId,
+                   Name: data.name,
+                   ImageUrl: res.data.data.display_url,
+                   Price: data.price,
+                   IsPopular: true,
+                 };
+
+                 setItems([...items, formData])
+
+
+          toast.success("Successfully added!");
+               
+        }
+
+       
+
+    
+        
+
+         
+        }
+
+
+        
+
+
 
   const settings = {
     infinite: false,
@@ -52,13 +107,108 @@ const Popular = () => {
 
   return (
     <div>
+      <div>
+        <Toaster />
+      </div>
       <div className="flex justify-between mb-4">
         <h1 className="font-bold">Popular</h1>
         <div className="flex gap-1">
-          <h1 className="text-orange-500">AddMore</h1>
+          <button
+            onClick={() => document.getElementById("my_modal_3").showModal()}
+            className="text-orange-500 cursor-pointer"
+          >
+            AddMore
+          </button>
+
+          {/* You can open the modal using document.getElementById('ID').showModal() method */}
+
+          <dialog id="my_modal_3" className="modal rounded-lg">
+            <div className="modal-box bg-orange-200 rounded-lg p-11">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+              <div>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="flex flex-col lg:flex-row gap-3">
+                    <div className="w-full">
+                      <label className="form-control w-full ">
+                        <div className="label">
+                          <span className="label-text">Name</span>
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Enter Your Item Name"
+                          {...register("name", { required: true })}
+                          aria-invalid={errors.name ? "true" : "false"}
+                          className="input px-2 py-3 w-full"
+                        />
+                        {errors.name?.type === "required" && (
+                          <p className="text-red-500" role="alert">
+                            Item name is required
+                          </p>
+                        )}
+                      </label>
+                    </div>
+                    <div className="w-full">
+                      <label className="form-control w-full ">
+                        <div className="label">
+                          <span className="label-text">Choose Image File</span>
+                        </div>
+                        <input
+                          type="file"
+                          {...register("image", { required: true })}
+                          aria-invalid={errors.image ? "true" : "false"}
+                          className="file-input px-2 py-3 w-full"
+                        />
+                        {errors.image?.type === "required" && (
+                          <p className="text-red-500" role="alert">
+                            Item Image is required
+                          </p>
+                        )}
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="w-full">
+                    <label className="form-control w-full ">
+                      <div className="label">
+                        <span className="label-text">Price</span>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Enter Your Item Price"
+                        {...register("price", { required: true })}
+                        aria-invalid={errors.price ? "true" : "false"}
+                        className="input py-3 px-2 w-full"
+                      />
+                      {errors.price?.type === "required" && (
+                        <p className="text-red-500" role="alert">
+                          Item price is required
+                        </p>
+                      )}
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="bg-white py-3 text-orange-500 font-bold w-full mt-10"
+                  >
+                    Add Item
+                  </button>
+                </form>
+              </div>
+            </div>
+          </dialog>
 
           {startIndex === 0 ? (
-            <button className="opacity-50" onClick={handlePrev} disabled={startIndex === 0}>
+            <button
+              className="opacity-50"
+              onClick={handlePrev}
+              disabled={startIndex === 0}
+            >
               <IoIosArrowBack />
             </button>
           ) : (
@@ -110,5 +260,7 @@ const Popular = () => {
     </div>
   );
 };
+
+
 
 export default Popular;

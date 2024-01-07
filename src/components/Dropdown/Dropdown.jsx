@@ -1,13 +1,15 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Dropdown = () => {
+
+  const location = useLocation();
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">
@@ -37,7 +39,7 @@ const Dropdown = () => {
                   <NavLink
                     to="/"
                     className={classNames(
-                      active ? "bg-gray-100 text-orange-500" : "text-gray-700",
+                      active || location.pathname == '/' ? "bg-gray-100 text-orange-500" : "text-gray-700",
                       "block px-4 py-2 text-sm"
                     )
                

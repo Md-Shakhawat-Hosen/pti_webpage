@@ -1,8 +1,6 @@
-# React + Vite
+Users have the flexibility to choose their preferred menu items and even have the option to customize their selection. By clicking the "Add More" button, a convenient popup form appears, allowing users to add additional items to their order seamlessly. Our primary focus has been refining the homepage's design and functionality to ensure a user-friendly experience.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+We intentionally excluded more complex features such as detailed information, categorization, and login/sign-up functionalities. This deliberate decision was made to streamline the user interface and concentrate efforts on perfecting the core functionality of the home page and item selection process.
 
-Currently, two official plugins are available:
+We aim to provide users with a straightforward and efficient platform for selecting menu items and enhancing their experience by allowing customization through the easy-to-use "Add More" feature. We are open to further refinements to meet your expectations if you have any specific suggestions or modifications.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

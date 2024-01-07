@@ -10,9 +10,9 @@ const Footer = () => {
     return (
       <div className="bg-[#f99f1c]">
         <div className="max-w-screen-xl mx-auto px-4">
-          <div className="flex  justify-between">
+          <div className="flex   justify-between">
             <div className="flex-1 lg:pl-10">
-              <div className="relative w-full lg:w-[500px] mt-10 text-center">
+              <div className="relative w-full lg:w-[500px] mt-16 text-center">
                 <input
                   placeholder="Enter Your Email"
                   className="px-3 py-3 w-full lg:w-[500px] rounded-xl"
