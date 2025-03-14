@@ -7,7 +7,7 @@ function App() {
   return (
     <>
      
-      <h1 className='text-2xl font-bold'>Vite + React123456789</h1>
+      <h1 className='text-2xl font-bold'>Vite + React12345678</h1>
     </>
   )
 }
